@@ -1,0 +1,51 @@
+[workspace]
+name = "lab-02-robot-model"
+description = "Lab-02-robot-model"
+# robostack-jazzy is resolved from anaconda.org (the prefix.dev mirror is equivalent).
+channels = ["robostack-jazzy", "conda-forge"]
+platforms = ["win-64"]
+
+[dependencies]
+python = "3.12.*"
+git = "*"
+colcon-common-extensions = "*"
+ninja = "*"
+pytest = "*"
+ros-jazzy-desktop = "*"
+ros-jazzy-xacro = "*"
+ros-jazzy-joint-state-publisher-gui = "*"
+ros-jazzy-tf2-tools = "*"
+
+[tasks]
+
+[tasks.verify]
+cmd = "python scripts/verify_install.py"
+description = "rclpy pub/sub smoke test"
+
+[tasks.build]
+cmd = 'cmd /c scripts\build_py.bat'
+description = "colcon build the workspace (pure Python, no compiler needed)"
+env = { R2B_BUILD_BASE = 'C:\rb\l02' }
+
+[tasks.build-core]
+cmd = 'cmd /c scripts\build_py.bat'
+description = "same as build"
+env = { R2B_BUILD_BASE = 'C:\rb\l02' }
+
+[tasks.test-unit]
+cmd = "python -m pytest ws/src -q -p no:cacheprovider"
+description = "unit tests (no ROS graph needed)"
+env = { PYTHONPATH = "ws/src/diffbot_description" }
+
+[tasks.ros]
+cmd = 'cmd /c scripts\in_ws.bat ros2'
+description = "ros2 CLI with this lab's workspace loaded"
+
+[tasks.demo-model]
+cmd = 'cmd /c scripts\in_ws.bat ros2 launch diffbot_description display.launch.py'
+description = "DiffBot in RViz2 with joint sliders"
+
+[tasks.test-class2]
+cmd = 'cmd /c scripts\in_ws.bat python scripts\tests\it_class2.py'
+description = "end-to-end test"
+env = { PYTHONPATH = "scripts/tests", QT_QPA_PLATFORM = "offscreen" }

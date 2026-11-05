@@ -1,0 +1,48 @@
+[workspace]
+name = "lab-u1-packt-ros2-from-scratch"
+description = "Lab-U1-packt-ros2-from-scratch"
+# robostack-jazzy is resolved from anaconda.org (the prefix.dev mirror is equivalent).
+channels = ["robostack-jazzy", "conda-forge"]
+platforms = ["win-64"]
+
+[dependencies]
+python = "3.12.*"
+git = "*"
+colcon-common-extensions = "*"
+ninja = "*"
+pytest = "*"
+ros-jazzy-desktop = "*"
+
+
+[tasks]
+
+[tasks.verify]
+cmd = "python scripts/verify_install.py"
+description = "rclpy pub/sub smoke test"
+
+[tasks.ros]
+cmd = "ros2"
+description = "ros2 CLI"
+
+[tasks.fetch]
+cmd = 'powershell -NoProfile -File scripts\fetch_upstream.ps1 ros2-from-scratch https://github.com/PacktPublishing/ROS-2-from-Scratch c76d563c32fbdaf5c589e6d60ccd0ce4fc529b55'
+description = "download the book's repository (pinned commit)"
+
+[tasks.build-packt]
+cmd = 'cmd /c scripts\build_upstream.bat packt upstream\ros2-from-scratch\ch9'
+depends-on = ["fetch"]
+description = "build the chapter-9 packages (Python + C++)"
+env = { R2B_UP_ROOT = 'C:\rb\u1' }
+
+[tasks.test-packt]
+cmd = 'cmd /c scripts\in_upstream.bat packt python scripts\tests\it_upstream_packt.py'
+description = "end-to-end test of the original code"
+env = { PYTHONPATH = "scripts/tests", QT_QPA_PLATFORM = "offscreen" }
+
+[tasks.demo-packt-turtles]
+cmd = 'cmd /c scripts\in_upstream.bat packt ros2 launch my_robot_bringup turtlesim_control.launch.py'
+description = "two turtles, two controllers"
+
+[tasks.demo-packt-numbers]
+cmd = 'cmd /c scripts\in_upstream.bat packt ros2 launch my_robot_bringup number_app.launch.py'
+description = "Python publishers + C++ counter"

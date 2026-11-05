@@ -1,0 +1,44 @@
+[workspace]
+name = "lab-i4-isaac-waypoints"
+description = "Lab-I4-isaac-waypoints"
+# robostack-jazzy is resolved from anaconda.org (the prefix.dev mirror is equivalent).
+channels = ["robostack-jazzy", "conda-forge"]
+platforms = ["win-64"]
+
+[dependencies]
+python = "3.12.*"
+git = "*"
+colcon-common-extensions = "*"
+ninja = "*"
+pytest = "*"
+ros-jazzy-desktop = "*"
+
+
+[tasks]
+
+[tasks.verify]
+cmd = "python scripts/verify_install.py"
+description = "rclpy pub/sub smoke test"
+
+[tasks.isaac-install]
+cmd = 'powershell -NoProfile -File scripts\isaac\ensure_isaac.ps1'
+description = "install Isaac Sim 5.1 into C:\\ix unless it is already there (about 10 GB)"
+
+[tasks.isaac-p4]
+cmd = 'powershell -NoProfile -File scripts\isaac\run_isaac.ps1 isaac\scripts\p4_waypoints.py'
+description = "Isaac project 4: DiffBot in a room with a red, a green and a blue square on the floor (add --gui for a window)"
+
+[tasks.isaac-ros]
+cmd = "ros2"
+description = "ros2 CLI on the Isaac Sim domain (78), e.g. pixi run isaac-ros topic list"
+env = { ROS_DOMAIN_ID = "78", RMW_IMPLEMENTATION = "rmw_fastrtps_cpp" }
+
+[tasks.isaac-waypoints]
+cmd = 'python isaac\ros_nodes\waypoints.py'
+description = "drive to the red, green and blue square in order, using /odom"
+env = { ROS_DOMAIN_ID = "78", RMW_IMPLEMENTATION = "rmw_fastrtps_cpp" }
+
+[tasks.test-isaac-p4]
+cmd = 'python scripts\tests\it_isaac_p4.py'
+description = "Isaac project 4 end to end (starts a headless Isaac Sim)"
+env = { PYTHONPATH = "scripts/tests" }

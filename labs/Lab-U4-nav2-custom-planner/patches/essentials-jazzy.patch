@@ -1,0 +1,29 @@
+﻿diff --git upstream/robotics_essentials_ros2/packages/custom_nav2_planner/include/custom_nav2_planner/custom_nav2_planner.hpp upstream_ws/essentials/src/custom_nav2_planner/include/custom_nav2_planner/custom_nav2_planner.hpp
+index 21dd6f0..eab7ae4 100644
+--- upstream/robotics_essentials_ros2/packages/custom_nav2_planner/include/custom_nav2_planner/custom_nav2_planner.hpp
++++ upstream_ws/essentials/src/custom_nav2_planner/include/custom_nav2_planner/custom_nav2_planner.hpp
+@@ -86,7 +86,8 @@ public:
+   // This method creates a new path for a given start and goal pose
+   nav_msgs::msg::Path createPlan(
+     const geometry_msgs::msg::PoseStamped & start,
+-    const geometry_msgs::msg::PoseStamped & goal) override;
++    const geometry_msgs::msg::PoseStamped & goal,
++  std::function<bool()> cancel_checker) override;
+ 
+ private:
+   // TF buffer
+diff --git upstream/robotics_essentials_ros2/packages/custom_nav2_planner/src/custom_nav2_planner.cpp upstream_ws/essentials/src/custom_nav2_planner/src/custom_nav2_planner.cpp
+index 8a443ed..10aeeb2 100644
+--- upstream/robotics_essentials_ros2/packages/custom_nav2_planner/src/custom_nav2_planner.cpp
++++ upstream_ws/essentials/src/custom_nav2_planner/src/custom_nav2_planner.cpp
+@@ -92,7 +92,8 @@ void CustomPlanner::deactivate()
+ 
+ nav_msgs::msg::Path CustomPlanner::createPlan(
+   const geometry_msgs::msg::PoseStamped & start,
+-  const geometry_msgs::msg::PoseStamped & goal)
++  const geometry_msgs::msg::PoseStamped & goal,
++  std::function<bool()> cancel_checker)
+ {
+   nav_msgs::msg::Path global_path;
+ 
+

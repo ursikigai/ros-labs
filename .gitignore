@@ -1,0 +1,17 @@
+# generated on a student's machine, never committed
+# (the per-project .pixi/config.toml IS committed: it tells pixi to keep environments outside the folder)
+.pixi/*
+!.pixi/config.toml
+ws/build/
+ws/install/
+ws/log/
+test_logs/
+upstream/
+upstream_ws/
+build/
+__pycache__/
+*.pyc
+frames_*.pdf
+frames_*.gv
+*.out
+*.err

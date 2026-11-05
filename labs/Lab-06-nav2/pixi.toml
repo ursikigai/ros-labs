@@ -1,0 +1,53 @@
+[workspace]
+name = "lab-06-nav2"
+description = "Lab-06-nav2"
+# robostack-jazzy is resolved from anaconda.org (the prefix.dev mirror is equivalent).
+channels = ["robostack-jazzy", "conda-forge"]
+platforms = ["win-64"]
+
+[dependencies]
+python = "3.12.*"
+git = "*"
+colcon-common-extensions = "*"
+ninja = "*"
+pytest = "*"
+ros-jazzy-desktop = "*"
+ros-jazzy-xacro = "*"
+ros-jazzy-joint-state-publisher-gui = "*"
+ros-jazzy-tf2-tools = "*"
+ros-jazzy-navigation2 = "*"
+ros-jazzy-nav2-bringup = "*"
+
+[tasks]
+
+[tasks.verify]
+cmd = "python scripts/verify_install.py"
+description = "rclpy pub/sub smoke test"
+
+[tasks.build]
+cmd = 'cmd /c scripts\build_py.bat'
+description = "colcon build the workspace (pure Python, no compiler needed)"
+env = { R2B_BUILD_BASE = 'C:\rb\l06' }
+
+[tasks.build-core]
+cmd = 'cmd /c scripts\build_py.bat'
+description = "same as build"
+env = { R2B_BUILD_BASE = 'C:\rb\l06' }
+
+[tasks.test-unit]
+cmd = "python -m pytest ws/src -q -p no:cacheprovider"
+description = "unit tests (no ROS graph needed)"
+env = { PYTHONPATH = "ws/src/diffbot_description;ws/src/diffbot_sim;ws/src/diffbot_odometry" }
+
+[tasks.ros]
+cmd = 'cmd /c scripts\in_ws.bat ros2'
+description = "ros2 CLI with this lab's workspace loaded"
+
+[tasks.goto]
+cmd = 'cmd /c scripts\in_ws.bat python scripts\goto.py'
+description = "send the robot to a point: pixi run goto 8.5 6.5"
+
+[tasks.test-nav2]
+cmd = 'cmd /c scripts\in_ws.bat python scripts\tests\it_nav2.py'
+description = "end-to-end test: real Nav2 driving DiffBot"
+env = { PYTHONPATH = "scripts/tests", NAV2_PLANNER = "navfn" }

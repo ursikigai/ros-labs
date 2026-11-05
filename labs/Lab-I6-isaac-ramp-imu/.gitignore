@@ -1,0 +1,10 @@
+/.pixi/
+ws/build/
+ws/install/
+ws/log/
+test_logs/
+upstream/
+upstream_ws/
+build/
+__pycache__/
+*.pyc

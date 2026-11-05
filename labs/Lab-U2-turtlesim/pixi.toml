@@ -1,0 +1,44 @@
+[workspace]
+name = "lab-u2-turtlesim"
+description = "Lab-U2-turtlesim"
+# robostack-jazzy is resolved from anaconda.org (the prefix.dev mirror is equivalent).
+channels = ["robostack-jazzy", "conda-forge"]
+platforms = ["win-64"]
+
+[dependencies]
+python = "3.12.*"
+git = "*"
+colcon-common-extensions = "*"
+ninja = "*"
+pytest = "*"
+ros-jazzy-desktop = "*"
+
+
+[tasks]
+
+[tasks.verify]
+cmd = "python scripts/verify_install.py"
+description = "rclpy pub/sub smoke test"
+
+[tasks.ros]
+cmd = "ros2"
+description = "ros2 CLI"
+
+[tasks.fetch]
+cmd = 'powershell -NoProfile -File scripts\fetch_upstream.ps1 ros_tutorials-jazzy https://github.com/ros/ros_tutorials c83136eb8d0d3ed52eb0906183dd86ca309a4ed2'
+description = "download ros_tutorials, branch jazzy (pinned commit)"
+
+[tasks.build-turtlesim]
+cmd = 'cmd /c scripts\build_upstream.bat turtlesim upstream\ros_tutorials-jazzy'
+depends-on = ["fetch"]
+description = "build turtlesim from source (C++ + Qt5)"
+env = { R2B_UP_ROOT = 'C:\rb\u2' }
+
+[tasks.test-turtlesim]
+cmd = 'cmd /c scripts\in_upstream.bat turtlesim python scripts\tests\it_upstream_turtlesim.py'
+description = "end-to-end test of the source-built turtlesim"
+env = { PYTHONPATH = "scripts/tests", QT_QPA_PLATFORM = "offscreen" }
+
+[tasks.demo-turtlesim]
+cmd = 'cmd /c scripts\in_upstream.bat turtlesim ros2 run turtlesim turtlesim_node'
+description = "the turtlesim built from source"

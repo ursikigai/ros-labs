@@ -1,0 +1,67 @@
+[workspace]
+name = "lab-u4-nav2-custom-planner"
+description = "Lab-U4-nav2-custom-planner"
+# robostack-jazzy is resolved from anaconda.org (the prefix.dev mirror is equivalent).
+channels = ["robostack-jazzy", "conda-forge"]
+platforms = ["win-64"]
+
+[dependencies]
+python = "3.12.*"
+git = "*"
+colcon-common-extensions = "*"
+ninja = "*"
+pytest = "*"
+ros-jazzy-desktop = "*"
+ros-jazzy-xacro = "*"
+ros-jazzy-joint-state-publisher-gui = "*"
+ros-jazzy-tf2-tools = "*"
+ros-jazzy-navigation2 = "*"
+ros-jazzy-nav2-bringup = "*"
+
+[tasks]
+
+[tasks.verify]
+cmd = "python scripts/verify_install.py"
+description = "rclpy pub/sub smoke test"
+
+[tasks.build]
+cmd = 'cmd /c scripts\build_py.bat'
+description = "colcon build the workspace (pure Python, no compiler needed)"
+env = { R2B_BUILD_BASE = 'C:\rb\u4' }
+
+[tasks.build-core]
+cmd = 'cmd /c scripts\build_py.bat'
+description = "same as build"
+env = { R2B_UP_ROOT = 'C:\rb\u4up', R2B_BUILD_BASE = 'C:\rb\u4' }
+
+[tasks.test-unit]
+cmd = "python -m pytest ws/src -q -p no:cacheprovider"
+description = "unit tests (no ROS graph needed)"
+env = { PYTHONPATH = "ws/src/diffbot_description;ws/src/diffbot_sim;ws/src/diffbot_odometry" }
+
+[tasks.ros]
+cmd = 'cmd /c scripts\in_ws.bat ros2'
+description = "ros2 CLI with this lab's workspace loaded"
+
+[tasks.goto]
+cmd = 'cmd /c scripts\in_ws.bat python scripts\goto.py'
+description = "send the robot to a point: pixi run goto 2.2 3.0"
+
+[tasks.fetch-essentials]
+cmd = 'powershell -NoProfile -File scripts\fetch_upstream.ps1 robotics_essentials_ros2 https://github.com/henki-robotics/robotics_essentials_ros2 704bc3f9dc5a1989e715022ac099d1b813b7611a'
+description = "download the Essentials repository (pinned commit)"
+
+[tasks.prepare-essentials]
+cmd = 'powershell -NoProfile -File scripts\prepare_essentials.ps1'
+depends-on = ["fetch-essentials"]
+description = "copy its ROS packages and apply the one-line Humble->Jazzy fix"
+
+[tasks.build-essentials]
+cmd = 'cmd /c scripts\build_upstream.bat essentials upstream_ws\essentials\src'
+description = "build create_plan_msgs and the C++ Nav2 plugin (run prepare-essentials first)"
+env = { R2B_UP_ROOT = 'C:\rb\u4up' }
+
+[tasks.test-essentials]
+cmd = 'cmd /c scripts\in_upstream.bat essentials python scripts\tests\it_nav2.py'
+description = "the original C++ Nav2 plugin inside real Nav2, driving DiffBot"
+env = { PYTHONPATH = "scripts/tests", NAV2_PLANNER = "custom", COURSE = "1" }

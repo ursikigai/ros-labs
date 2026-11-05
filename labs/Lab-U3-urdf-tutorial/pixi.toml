@@ -1,0 +1,46 @@
+[workspace]
+name = "lab-u3-urdf-tutorial"
+description = "Lab-U3-urdf-tutorial"
+# robostack-jazzy is resolved from anaconda.org (the prefix.dev mirror is equivalent).
+channels = ["robostack-jazzy", "conda-forge"]
+platforms = ["win-64"]
+
+[dependencies]
+python = "3.12.*"
+git = "*"
+colcon-common-extensions = "*"
+ninja = "*"
+pytest = "*"
+ros-jazzy-desktop = "*"
+ros-jazzy-xacro = "*"
+ros-jazzy-joint-state-publisher-gui = "*"
+ros-jazzy-urdf-tutorial = "*"
+
+[tasks]
+
+[tasks.verify]
+cmd = "python scripts/verify_install.py"
+description = "rclpy pub/sub smoke test"
+
+[tasks.ros]
+cmd = "ros2"
+description = "ros2 CLI"
+
+[tasks.fetch]
+cmd = 'powershell -NoProfile -File scripts\fetch_upstream.ps1 urdf_tutorial-ros2 https://github.com/ros/urdf_tutorial 050f1e47cfdb2c5f3eb0746bc15c57e6a870faef'
+description = "download urdf_tutorial, branch ros2 (pinned commit)"
+
+[tasks.build-urdf]
+cmd = 'cmd /c scripts\build_upstream.bat urdf upstream\urdf_tutorial-ros2'
+depends-on = ["fetch"]
+description = "build the original urdf_tutorial"
+env = { R2B_UP_ROOT = 'C:\rb\u3' }
+
+[tasks.test-urdf]
+cmd = 'cmd /c scripts\in_upstream.bat urdf python scripts\tests\it_upstream_urdf.py'
+description = "end-to-end test: all 8 example robots"
+env = { PYTHONPATH = "scripts/tests", QT_QPA_PLATFORM = "offscreen" }
+
+[tasks.demo-urdf]
+cmd = 'cmd /c scripts\in_upstream.bat urdf ros2 launch urdf_tutorial display.launch.py'
+description = "the first robot in RViz2; add model:=urdf/06-flexible.urdf"

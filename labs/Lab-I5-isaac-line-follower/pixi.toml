@@ -1,0 +1,44 @@
+[workspace]
+name = "lab-i5-isaac-line-follower"
+description = "Lab-I5-isaac-line-follower"
+# robostack-jazzy is resolved from anaconda.org (the prefix.dev mirror is equivalent).
+channels = ["robostack-jazzy", "conda-forge"]
+platforms = ["win-64"]
+
+[dependencies]
+python = "3.12.*"
+git = "*"
+colcon-common-extensions = "*"
+ninja = "*"
+pytest = "*"
+ros-jazzy-desktop = "*"
+
+
+[tasks]
+
+[tasks.verify]
+cmd = "python scripts/verify_install.py"
+description = "rclpy pub/sub smoke test"
+
+[tasks.isaac-install]
+cmd = 'powershell -NoProfile -File scripts\isaac\ensure_isaac.ps1'
+description = "install Isaac Sim 5.1 into C:\\ix unless it is already there (about 10 GB)"
+
+[tasks.isaac-p5]
+cmd = 'powershell -NoProfile -File scripts\isaac\run_isaac.ps1 isaac\scripts\p5_line.py'
+description = "Isaac project 5: DiffBot with a downward camera and a black line on the floor (add --gui for a window)"
+
+[tasks.isaac-ros]
+cmd = "ros2"
+description = "ros2 CLI on the Isaac Sim domain (78), e.g. pixi run isaac-ros topic list"
+env = { ROS_DOMAIN_ID = "78", RMW_IMPLEMENTATION = "rmw_fastrtps_cpp" }
+
+[tasks.isaac-line]
+cmd = 'python isaac\ros_nodes\line_follower.py'
+description = "follow the black line using only the camera image"
+env = { ROS_DOMAIN_ID = "78", RMW_IMPLEMENTATION = "rmw_fastrtps_cpp" }
+
+[tasks.test-isaac-p5]
+cmd = 'python scripts\tests\it_isaac_p5.py'
+description = "Isaac project 5 end to end (starts a headless Isaac Sim)"
+env = { PYTHONPATH = "scripts/tests" }

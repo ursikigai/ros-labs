@@ -1,0 +1,49 @@
+[workspace]
+name = "lab-i2-isaac-lidar"
+description = "Lab-I2-isaac-lidar"
+# robostack-jazzy is resolved from anaconda.org (the prefix.dev mirror is equivalent).
+channels = ["robostack-jazzy", "conda-forge"]
+platforms = ["win-64"]
+
+[dependencies]
+python = "3.12.*"
+git = "*"
+colcon-common-extensions = "*"
+ninja = "*"
+pytest = "*"
+ros-jazzy-desktop = "*"
+
+
+[tasks]
+
+[tasks.verify]
+cmd = "python scripts/verify_install.py"
+description = "rclpy pub/sub smoke test"
+
+[tasks.isaac-install]
+cmd = 'powershell -NoProfile -File scripts\isaac\ensure_isaac.ps1'
+description = "install Isaac Sim 5.1 into C:\\ix unless it is already there (about 10 GB)"
+
+[tasks.isaac-p2]
+cmd = 'powershell -NoProfile -File scripts\isaac\run_isaac.ps1 isaac\scripts\p2_lidar.py'
+description = "Isaac project 2: DiffBot with a lidar in a room with obstacles (add --gui for a window)"
+
+[tasks.isaac-ros]
+cmd = "ros2"
+description = "ros2 CLI on the Isaac Sim domain (78), e.g. pixi run isaac-ros topic list"
+env = { ROS_DOMAIN_ID = "78", RMW_IMPLEMENTATION = "rmw_fastrtps_cpp" }
+
+[tasks.isaac-avoider]
+cmd = 'cmd /c scripts\in_ws.bat ros2 run diffbot_navigation obstacle_avoider'
+description = "the obstacle avoider (same node as the LiDAR lab), steering the Isaac robot"
+env = { ROS_DOMAIN_ID = "78", RMW_IMPLEMENTATION = "rmw_fastrtps_cpp" }
+
+[tasks.test-isaac-p2]
+cmd = 'cmd /c scripts\in_ws.bat python scripts\tests\it_isaac_p2.py'
+description = "Isaac project 2 end to end (starts a headless Isaac Sim)"
+env = { PYTHONPATH = "scripts/tests" }
+
+[tasks.build]
+cmd = 'cmd /c scripts\build_py.bat'
+description = "colcon build the workspace (pure Python)"
+env = { R2B_BUILD_BASE = 'C:\rb\i2' }
