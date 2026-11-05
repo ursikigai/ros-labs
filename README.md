@@ -14,14 +14,14 @@ winget install --id prefix-dev.pixi -e --source winget
 ## 2. Get the labs
 
 ```powershell
-git clone <repository-url> ros-labs
+git clone https://github.com/ursikigai/ros-labs.git ros-labs
 cd ros-labs
 ```
 
 Only want one lab? Download just that folder:
 
 ```powershell
-git clone --filter=blob:none --sparse <repository-url> ros-labs
+git clone --filter=blob:none --sparse https://github.com/ursikigai/ros-labs.git ros-labs
 cd ros-labs
 git sparse-checkout set labs/Lab-02-robot-model
 ```
