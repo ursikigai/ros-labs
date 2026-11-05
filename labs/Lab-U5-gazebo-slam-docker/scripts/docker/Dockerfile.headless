@@ -1,0 +1,9 @@
+# Headless layer for the Robotics & ROS 2 Essentials image (built from the repo's own docker/Dockerfile).
+# The repo's exercises open Gazebo's GUI through X11, which Windows does not have. This layer only ADDS a virtual
+# display (Xvfb) so the same launch files run unmodified without a screen. Nothing of the original image is changed.
+#
+#   docker build -t robotics_essentials_ros2:headless -f scripts/docker/Dockerfile.headless scripts/docker
+FROM robotics_essentials_ros2:latest
+RUN sudo apt-get update && \
+    sudo apt-get install -y --no-install-recommends xvfb x11-utils mesa-utils && \
+    sudo apt-get clean && sudo rm -rf /var/lib/apt/lists/*

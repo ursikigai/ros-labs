@@ -1,0 +1,18 @@
+[workspace]
+name = "lab-u5-gazebo-slam-docker"
+description = "Lab-U5-gazebo-slam-docker"
+channels = ["conda-forge"]
+platforms = ["win-64"]
+
+[dependencies]
+git = "*"
+
+[tasks]
+
+[tasks.build-essentials-docker]
+cmd = 'powershell -NoProfile -File scripts\docker\build_essentials_image.ps1'
+description = "build the Essentials repo's own Docker image plus a thin headless layer (needs Docker Desktop)"
+
+[tasks.test-essentials-docker]
+cmd = 'powershell -NoProfile -File scripts\docker\run_essentials_docker.ps1 -Stage all'
+description = "run exercises 0-1, 2, 4 and 5 in the image (about 7 minutes)"

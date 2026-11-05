@@ -24,11 +24,11 @@ Each lab was tested **as a standalone project, from its own folder in this repos
 | [Lab-U2-turtlesim](labs/Lab-U2-turtlesim/README.md) | 15 | 0 | 0 | 2026-11-05 10:24 |
 | [Lab-U3-urdf-tutorial](labs/Lab-U3-urdf-tutorial/README.md) | 13 | 0 | 0 | 2026-11-05 09:00 |
 | [Lab-U4-nav2-custom-planner](labs/Lab-U4-nav2-custom-planner/README.md) | 8 | 0 | 0 | 2026-11-05 09:06 |
-| **Total** | **167** | **0** | **1** | |
+| [Lab-U5-gazebo-slam-docker](labs/Lab-U5-gazebo-slam-docker/README.md) | 9 | 0 | 1 | 2026-11-05 11:38 |
+| **Total** | **176** | **0** | **2** | |
 
 "Skipped" blocks need a person (RViz2 click, opening a picture).
 
-**Not yet published:** `Lab-U5-gazebo-slam-docker` (Docker). Its four test stages passed standalone, but a clean full run is still being finalised.
 
 ## Problems found by this testing (fixed before release)
 
@@ -41,7 +41,8 @@ Each lab was tested **as a standalone project, from its own folder in this repos
 ## Not tested
 
 * **A machine with nothing installed.** Everything was already present here: `winget install` of Git and pixi, the first `pixi install` of a *brand-new* pixi cache, the very first Isaac Sim download (the labs reused the existing 10 GB install in `C:\ix`), the very first Docker image build (cached here) and Docker Desktop / WSL 2 / Visual Studio Build Tools / NVIDIA driver installation.
-* **The labs that download from GitHub** (U1-U5) were tested with working internet access; they need it once.
+* **The labs that download from GitHub or Docker Hub** (U1-U5) were tested with working internet access; they need it once.
+* **Docker lab (U5) timing:** headless Gazebo sometimes fails to start inside the container; the lab's runner retries such a stage once. The recorded run passed all stages.
 * **Anything that needs a mouse:** clicking *Nav2 Goal* in RViz2, dragging joint sliders, judging pictures in RViz2, Isaac Sim and the SLAM map.
 * **The open exercises** (write your own planner, add a camera link, ...). Only the ones with a shipped solution are tested (`code\` folders).
 * **Numbers in the "Observations" tables** come from single runs; spawn positions, physics and timing change them a little. The "Verification" tests use tolerances for that.

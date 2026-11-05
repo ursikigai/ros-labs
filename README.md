@@ -1,6 +1,6 @@
 # ROS 2 Labs (Windows)
 
-Seventeen hands-on ROS 2 (Jazzy) projects (sixteen are in the repository now; the Docker lab U5 follows shortly). **Every lab is a complete, separate project** in its own folder under `labs\`: its own environment (`pixi.toml`), source code, scripts, automated test and manual (`README.md`). You can do any lab on its own, in any order; nothing is shared between them except the tools you install once.
+Seventeen hands-on ROS 2 (Jazzy) projects. **Every lab is a complete, separate project** in its own folder under `labs\`: its own environment (`pixi.toml`), source code, scripts, automated test and manual (`README.md`). You can do any lab on its own, in any order; nothing is shared between them except the tools you install once.
 
 ## 1. Install two tools (once per computer)
 
@@ -50,7 +50,7 @@ Open that folder's **`README.md`** (or its PDF in `pdf\`) and follow it. Every m
 | `Lab-U2-turtlesim` | turtlesim built from source | C++ compiler | 45 min |
 | `Lab-U3-urdf-tutorial` | the eight `urdf_tutorial` robots | | 45 min |
 | `Lab-U4-nav2-custom-planner` | Your own planner inside Nav2 | C++ compiler | 60 min |
-| `Lab-U5-gazebo-slam-docker` | Gazebo, SLAM and Nav2 in Docker *(coming soon, not in the repository yet)* | Docker Desktop | 30 min |
+| `Lab-U5-gazebo-slam-docker` | Gazebo, SLAM and Nav2 in Docker | Docker Desktop | 30 min |
 | **NVIDIA Isaac Sim (physics simulator)** | | | |
 | `Lab-I1-isaac-drive` | Drive in Isaac Sim from ROS 2 | NVIDIA RTX GPU | 45 min |
 | `Lab-I2-isaac-lidar` | LiDAR in Isaac Sim + obstacle avoider | NVIDIA RTX GPU | 30 min |
