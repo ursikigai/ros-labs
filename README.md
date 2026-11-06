@@ -2,29 +2,29 @@
 
 Seventeen hands-on ROS 2 (Jazzy) projects. **Every lab is a complete, separate project** in its own folder under `labs\`: its own environment (`pixi.toml`), source code, scripts, automated test and manual (`README.md`). You can do any lab on its own, in any order; nothing is shared between them except the tools you install once.
 
-## 1. Install two tools (once per computer)
+**You do not need administrator rights to run a lab.** Each lab folder has a **`README-SETUP.md`** with its own setup steps, and a **`README.md`** with the lab itself. Three things do need an administrator, once per computer, and only for the labs that use them: the C++ compiler (*Visual Studio Build Tools*), Docker Desktop, and the NVIDIA driver. Each `README-SETUP.md` says if yours needs one.
+
+## 1. Install pixi (once per computer, no administrator rights)
 
 Open **PowerShell** and run, then close and reopen PowerShell:
 
 ```powershell
-winget install --id Git.Git -e --source winget
-winget install --id prefix-dev.pixi -e --source winget
+powershell -ExecutionPolicy Bypass -c "irm -useb https://pixi.sh/install.ps1 | iex"
 ```
 
-## 2. Get the labs
+## 2. Get the labs (no Git needed)
+
+Keep the folder outside OneDrive, for example in your user folder:
 
 ```powershell
-git clone https://github.com/ursikigai/ros-labs.git ros-labs
+cd $HOME
+Invoke-WebRequest https://github.com/ursikigai/ros-labs/archive/refs/heads/main.zip -OutFile ros-labs.zip
+Expand-Archive ros-labs.zip -DestinationPath .
+Rename-Item ros-labs-main ros-labs
 cd ros-labs
 ```
 
-Only want one lab? Download just that folder:
-
-```powershell
-git clone --filter=blob:none --sparse https://github.com/ursikigai/ros-labs.git ros-labs
-cd ros-labs
-git sparse-checkout set labs/Lab-02-robot-model
-```
+(With Git installed you can use `git clone https://github.com/ursikigai/ros-labs.git ros-labs` instead.)
 
 ## 3. Run a lab
 
@@ -32,7 +32,7 @@ git sparse-checkout set labs/Lab-02-robot-model
 cd labs\Lab-02-robot-model
 ```
 
-Open that folder's **`README.md`** (or its PDF in `pdf\`) and follow it. Every manual starts with the same two commands, `pixi install` (downloads the lab's environment, minutes the first time) and `pixi run verify`, and then continues with the lab's own steps. The last step of each manual is a one-command automated check (`pixi run test-...`).
+Open that folder's **`README-SETUP.md`** once, then its **`README.md`** (or its PDF in `pdf\`) and follow it. Every manual starts with the same two commands, `pixi install` (downloads the lab's environment, minutes the first time) and `pixi run verify`, and then continues with the lab's own steps. The last step of each manual is a one-command automated check (`pixi run test-...`).
 
 ## The labs
 
