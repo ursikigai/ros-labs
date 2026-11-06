@@ -113,9 +113,9 @@ pixi run ros param get /t2/turtle_controller turtle_velocity --no-daemon --spin-
 packt ros2 service call /t1/activate_turtle my_robot_interfaces/srv/ActivateTurtle "{activate: false}"
 ```
 
-Watch the windows: the left turtle stops, the other keeps circling. Confirm with the topic (no message arrives for `/t1`, messages keep coming for `/t2`):
+Watch the windows: the left turtle stops, the other keeps circling. Confirm with the topic (no message arrives for `/t1`, messages keep coming for `/t2`; `linear.x` is 0.5, or 1.0 while the turtle is in the right half of the window, because the controller doubles the speed there):
 
-<!--run: fg expect="linear:" expect="x: 0.5"-->
+<!--run: fg expect="linear:" expect="x: (0.5|1.0)"-->
 ```powershell
 pixi run ros topic echo /t2/turtle1/cmd_vel --no-daemon --once --spin-time 5
 ```
