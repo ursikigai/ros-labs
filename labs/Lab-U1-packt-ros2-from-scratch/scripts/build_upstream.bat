@@ -16,6 +16,14 @@ if not exist "%VCVARS%" (echo ERROR: vcvars64.bat not found & exit /b 1)
 set "PATH=%PATH%;%ProgramFiles(x86)%\Microsoft Visual Studio\Installer"
 call "%VCVARS%" >nul || exit /b 1
 cd /d "%~dp0.." || exit /b 1
+REM A build tree last used by another copy of this lab has a CMake cache pointing at that copy: start clean.
+set "PREV="
+if exist "%R2B_UP_ROOT%\%NAME%\.owner" set /p PREV=<"%R2B_UP_ROOT%\%NAME%\.owner"
+if /i not "%PREV%"=="%CD%" (
+  if exist "%R2B_UP_ROOT%\%NAME%" rmdir /s /q "%R2B_UP_ROOT%\%NAME%"
+  mkdir "%R2B_UP_ROOT%\%NAME%"
+)
+>"%R2B_UP_ROOT%\%NAME%\.owner" echo %CD%
 REM NOTE: %* ignores SHIFT (it always holds ALL original arguments), so gather the extras by hand.
 shift
 shift

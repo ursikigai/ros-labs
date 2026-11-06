@@ -20,6 +20,14 @@ REM The build tree lives at a SHORT path: generated rosidl object files exceed W
 REM character path limit inside the repo (271 chars) and MSVC fails with C1083. Override with
 REM the R2B_BUILD_BASE environment variable if C:\ is not writable.
 if "%R2B_BUILD_BASE%"=="" set "R2B_BUILD_BASE=%SystemDrive%\r2b"
+REM A build tree last used by another copy of this lab has a CMake cache pointing at that copy: start clean.
+set "PREV="
+if exist "%R2B_BUILD_BASE%\.owner" set /p PREV=<"%R2B_BUILD_BASE%\.owner"
+if /i not "%PREV%"=="%CD%" (
+  if exist "%R2B_BUILD_BASE%" rmdir /s /q "%R2B_BUILD_BASE%"
+  mkdir "%R2B_BUILD_BASE%"
+)
+>"%R2B_BUILD_BASE%\.owner" echo %CD%
 if "%~1"=="" (
   colcon build --build-base "%R2B_BUILD_BASE%" --event-handlers console_cohesion+ --cmake-args -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -GNinja
 ) else (
