@@ -1,4 +1,5 @@
-/.pixi/
+/.pixi/*
+!/.pixi/config.toml
 ws/build/
 ws/install/
 ws/log/

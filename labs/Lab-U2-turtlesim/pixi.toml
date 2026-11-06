@@ -25,7 +25,7 @@ cmd = "ros2"
 description = "ros2 CLI"
 
 [tasks.fetch]
-cmd = 'powershell -NoProfile -File scripts\fetch_upstream.ps1 ros_tutorials-jazzy https://github.com/ros/ros_tutorials c83136eb8d0d3ed52eb0906183dd86ca309a4ed2'
+cmd = 'powershell -NoProfile -ExecutionPolicy Bypass -File scripts\fetch_upstream.ps1 ros_tutorials-jazzy https://github.com/ros/ros_tutorials c83136eb8d0d3ed52eb0906183dd86ca309a4ed2'
 description = "download ros_tutorials, branch jazzy (pinned commit)"
 
 [tasks.build-turtlesim]

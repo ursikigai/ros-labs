@@ -8,7 +8,7 @@
 
 Everything this lab needs is in this folder. Nothing from the other labs is required.
 
-**Requirements:** Windows 10/11, PowerShell, [pixi](https://pixi.sh) (`winget install --id prefix-dev.pixi -e --source winget`), and Docker Desktop with the WSL 2 backend (about 12 GB RAM for its VM, 10 GB disk); internet access for the first build.
+**Requirements:** Windows 10/11, PowerShell, [pixi](https://pixi.sh) (no administrator rights needed; install steps are in [README-SETUP.md](README-SETUP.md)), and Docker Desktop with the WSL 2 backend (about 12 GB RAM for its VM, 10 GB disk); internet access for the first build.
 
 | In this folder | |
 |---|---|
@@ -67,22 +67,22 @@ docker run --rm robotics_essentials_ros2:headless ros2 pkg list | Select-String 
 
 <!--run: fg timeout=900 expect="ALL PASSED" expect="real-time factor"-->
 ```powershell
-powershell -NoProfile -File scripts\docker\run_essentials_docker.ps1 -Stage sim
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\docker\run_essentials_docker.ps1 -Stage sim
 ```
 
 <!--run: fg timeout=900 expect="ALL PASSED" expect="our wheel odometry reproduces the commanded motion"-->
 ```powershell
-powershell -NoProfile -File scripts\docker\run_essentials_docker.ps1 -Stage odometry
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\docker\run_essentials_docker.ps1 -Stage odometry
 ```
 
 <!--run: fg timeout=900 expect="ALL PASSED" expect="map_saver_cli"-->
 ```powershell
-powershell -NoProfile -File scripts\docker\run_essentials_docker.ps1 -Stage slam
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\docker\run_essentials_docker.ps1 -Stage slam
 ```
 
 <!--run: fg timeout=900 expect="ALL PASSED" expect="custom_nav2_planner/CustomPlanner"-->
 ```powershell
-powershell -NoProfile -File scripts\docker\run_essentials_docker.ps1 -Stage nav
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\docker\run_essentials_docker.ps1 -Stage nav
 ```
 
 **5. Look at the map that SLAM built** (opens in your picture viewer; white = free, black = walls, grey = unknown).

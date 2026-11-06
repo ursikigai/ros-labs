@@ -48,11 +48,11 @@ cmd = 'cmd /c scripts\in_ws.bat python scripts\goto.py'
 description = "send the robot to a point: pixi run goto 2.2 3.0"
 
 [tasks.fetch-essentials]
-cmd = 'powershell -NoProfile -File scripts\fetch_upstream.ps1 robotics_essentials_ros2 https://github.com/henki-robotics/robotics_essentials_ros2 704bc3f9dc5a1989e715022ac099d1b813b7611a'
+cmd = 'powershell -NoProfile -ExecutionPolicy Bypass -File scripts\fetch_upstream.ps1 robotics_essentials_ros2 https://github.com/henki-robotics/robotics_essentials_ros2 704bc3f9dc5a1989e715022ac099d1b813b7611a'
 description = "download the Essentials repository (pinned commit)"
 
 [tasks.prepare-essentials]
-cmd = 'powershell -NoProfile -File scripts\prepare_essentials.ps1'
+cmd = 'powershell -NoProfile -ExecutionPolicy Bypass -File scripts\prepare_essentials.ps1'
 depends-on = ["fetch-essentials"]
 description = "copy its ROS packages and apply the one-line Humble->Jazzy fix"
 

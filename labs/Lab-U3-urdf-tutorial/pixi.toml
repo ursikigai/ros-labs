@@ -27,7 +27,7 @@ cmd = "ros2"
 description = "ros2 CLI"
 
 [tasks.fetch]
-cmd = 'powershell -NoProfile -File scripts\fetch_upstream.ps1 urdf_tutorial-ros2 https://github.com/ros/urdf_tutorial 050f1e47cfdb2c5f3eb0746bc15c57e6a870faef'
+cmd = 'powershell -NoProfile -ExecutionPolicy Bypass -File scripts\fetch_upstream.ps1 urdf_tutorial-ros2 https://github.com/ros/urdf_tutorial 050f1e47cfdb2c5f3eb0746bc15c57e6a870faef'
 description = "download urdf_tutorial, branch ros2 (pinned commit)"
 
 [tasks.build-urdf]

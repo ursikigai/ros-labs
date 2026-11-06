@@ -25,7 +25,7 @@ cmd = "ros2"
 description = "ros2 CLI"
 
 [tasks.fetch]
-cmd = 'powershell -NoProfile -File scripts\fetch_upstream.ps1 ros2-from-scratch https://github.com/PacktPublishing/ROS-2-from-Scratch c76d563c32fbdaf5c589e6d60ccd0ce4fc529b55'
+cmd = 'powershell -NoProfile -ExecutionPolicy Bypass -File scripts\fetch_upstream.ps1 ros2-from-scratch https://github.com/PacktPublishing/ROS-2-from-Scratch c76d563c32fbdaf5c589e6d60ccd0ce4fc529b55'
 description = "download the book's repository (pinned commit)"
 
 [tasks.build-packt]

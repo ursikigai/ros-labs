@@ -21,11 +21,11 @@ cmd = "python scripts/verify_install.py"
 description = "rclpy pub/sub smoke test"
 
 [tasks.isaac-install]
-cmd = 'powershell -NoProfile -File scripts\isaac\ensure_isaac.ps1'
+cmd = 'powershell -NoProfile -ExecutionPolicy Bypass -File scripts\isaac\ensure_isaac.ps1'
 description = "install Isaac Sim 5.1 into C:\\ix unless it is already there (about 10 GB)"
 
 [tasks.isaac-p3]
-cmd = 'powershell -NoProfile -File scripts\isaac\run_isaac.ps1 isaac\scripts\p3_camera.py'
+cmd = 'powershell -NoProfile -ExecutionPolicy Bypass -File scripts\isaac\run_isaac.ps1 isaac\scripts\p3_camera.py'
 description = "Isaac project 3: DiffBot with an RGB + depth camera and a red target cube (add --gui for a window)"
 
 [tasks.isaac-ros]

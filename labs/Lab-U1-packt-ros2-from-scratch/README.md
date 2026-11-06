@@ -8,7 +8,7 @@
 
 Everything this lab needs is in this folder. Nothing from the other labs is required.
 
-**Requirements:** Windows 10/11, PowerShell, [pixi](https://pixi.sh) (`winget install --id prefix-dev.pixi -e --source winget`), and Visual Studio Build Tools (C++ workload); internet access once, to download the book's repository from GitHub.
+**Requirements:** Windows 10/11, PowerShell, [pixi](https://pixi.sh) (no administrator rights needed; install steps are in [README-SETUP.md](README-SETUP.md)), and Visual Studio Build Tools (C++ workload); internet access once, to download the book's repository from GitHub.
 
 | In this folder | |
 |---|---|
