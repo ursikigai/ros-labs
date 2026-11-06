@@ -219,8 +219,13 @@ def stage_slam(c, p):
     r = subprocess.run(["ros2", "run", "nav2_map_server", "map_saver_cli", "--free", "0.15", "--fmt", "png", "-f", f"{OUT}/andino_map"],
                        capture_output=True, text=True, timeout=90)
     png = f"{OUT}/andino_map.png"
+    # the output folder is a bind mount from Windows: right after the write the size can still read 0, so give it a moment
+    for _ in range(30):
+        if os.path.exists(png) and os.path.getsize(png) > 0:
+            break
+        time.sleep(0.5)
     c.check(os.path.exists(png) and os.path.getsize(png) > 0 and os.path.exists(f"{OUT}/andino_map.yaml"),
-            f"map_saver_cli (exercise 2) wrote andino_map.png ({os.path.getsize(png) if os.path.exists(png) else 0} bytes) and .yaml")
+            f"map_saver_cli (exercise 2) wrote andino_map.png ({os.path.getsize(png) if os.path.exists(png) else 0} bytes) and .yaml (exit {r.returncode})")
 
 
 def stage_nav(c, p):
